@@ -10,7 +10,7 @@ import visualization_utils as vis_util
 # Constants
 MODEL_NAME = 'models/inference_graph'
 PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
-PATH_TO_LABELS = 'training/labelmap.pbtxt'
+PATH_TO_LABELS = 'labelmap.pbtxt'
 NUM_CLASSES = 6
 
 # Load the label map
