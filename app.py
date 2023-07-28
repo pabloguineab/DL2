@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 import tensorflow as tf
 from PIL import Image
-from utils import label_map_util
-from utils import visualization_utils as vis_util
+import label_map_util
+import visualization_utils as vis_util
 
 # Constants
 MODEL_NAME = 'models/inference_graph'
