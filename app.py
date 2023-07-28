@@ -5,7 +5,8 @@ import cv2
 from PIL import Image
 
 # Load the trained model
-model = tf.saved_model.load('models/frozen_inference_graph.pb')
+# Load the trained model
+model = tf.keras.models.load_model('models/frozen_inference_graph.pb')
 
 def predict(image):
     # Convert the image to numpy array
