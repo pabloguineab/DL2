@@ -4,9 +4,23 @@ import numpy as np
 import cv2
 from PIL import Image
 
+def load_frozen_graph(path):
+    with tf.io.gfile.GFile(path, 'rb') as f:
+        graph_def = tf.compat.v1.GraphDef()
+        graph_def.ParseFromString(f.read())
+
+    with tf.Graph().as_default() as graph:
+        tf.import_graph_def(graph_def, name='')
+        
+    return graph
+
 # Load the trained model
-# Load the trained model
-model = tf.keras.models.load_model('models/frozen_inference_graph.pb')
+graph = load_frozen_graph('models/frozen_inference_graph.pb')
+
+# Use the graph
+with tf.compat.v1.Session(graph=graph) as sess:
+    input_image = graph.get_tensor_by_name('input_image:0')  # Replace with the actual names
+    output = graph.get_tensor_by_name('output:0')  # Replace with the actual names
 
 def predict(image):
     # Convert the image to numpy array
@@ -18,7 +32,7 @@ def predict(image):
     image_array = np.expand_dims(image_array, axis=0)
 
     # Perform inference
-    predictions = model(image_array)
+    predictions = sess.run(output, feed_dict={input_image: image_array})
 
     # Postprocess predictions: here you might need to adapt the code to the specific output of your model
     card = np.argmax(predictions[0]) # index of the max confidence score
